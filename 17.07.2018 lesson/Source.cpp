@@ -17,7 +17,7 @@ int main()
 	{
 		cout << "Задача № ";
 		cin >> tn;
-		
+
 
 		switch (tn)
 		{
@@ -52,7 +52,7 @@ int main()
 			}
 			cout << endl << endl;
 
-			for (pass = 0; pass < n-1; pass++)
+			for (pass = 0; pass < n - 1; pass++)
 			{
 				for (k = 0; k < n - 1; k++)
 				{
@@ -188,7 +188,7 @@ int main()
 			}
 			/*cout << k << endl;
 
-			for(i=0; i<k; i++) 
+			for(i=0; i<k; i++)
 			cout << a[i];
 
 			cout << endl;*/
@@ -225,7 +225,7 @@ int main()
 					i++;
 					k++;
 				}
-				
+
 				if (n < 10)
 				{
 					a[i] = n;
@@ -239,9 +239,9 @@ int main()
 			cout << endl << endl;*/
 
 			double sum = 0;
-			
+
 			i = 0;
-			while(i<k)
+			while (i < k)
 			{
 				sum += a[i] * pow(2, i);
 				i++;
@@ -259,7 +259,7 @@ int main()
 			// 44.	**Написать программу «учет успеваемости». Создайте двухмерный массив целых чисел 10х10. Строки отвечают за конкретного студента, столбцы за оценки. 
 			// Например,
 			// 11 10  9  8
-			// 6   4 12 5
+			// 6  4  12  5
 			// первая строка – оценки первого студента по математике, физике, программированию и физкультуре.
 			// вторая строка – оценки второго студента по математике, физике, программированию и физкультуре.
 			// Реализовать меню, которое содержит следующие пункты :
@@ -268,102 +268,238 @@ int main()
 			// c)	список оценок конкретного студента и его средний бал(вводится номер строки).
 			// d)	список оценок по конкретной дисциплине (вводится номер столбца).
 
-				int a[10][10];
-				int n = 4;
-				int i, j;
-				int k, kh = 0, ko = 0;
-				int total;
+			int a[10][10];
+			int n = 4;
+			int i, j;
+			int k, kh = 0, ko = 0;
+			double sum = 0;
 
-				cout << "учет успеваемости" << endl << endl;
-				for (i = 0; i < 10; i++)
+			cout << "учет успеваемости" << endl << endl;
+			for (i = 0; i < 10; i++)
+			{
+				cout << left << setw(4) << "student" << " " << i << "  |   ";
+				for (j = 0; j < n; j++)
 				{
-					cout << left << setw(4) << "student" << " " << i << "  |   ";
+					a[i][j] = 6 + rand() % 6; // зададим такой диапозон по 12 больной системе, чтобы с большей вероятностью
+											  // были и хорошисты и отличники для наглядности
+					cout << right << setw(3) << a[i][j] << " ";
+				}
+				cout << endl << endl;
+			}
+
+			int info;
+
+			int c = 0;
+			while (c < 4)
+			{
+				c++;
+				cout << "выберите тип запроса:" << endl << endl;
+				cout << "1 - процент и количество хорошистов, 2 - процент и количество отличников, 3 - список оценок конкретного студента и его средний бал, 4 - список оценок по конкретной дисциплине" << endl;
+				cin >> info;
+
+				switch (info)
+				{
+				case 1:
+				{
+					for (i = 0; i < 10; i++)
+					{
+						k = 0;
+						sum = 0;
+						for (j = 0; j < n; j++)
+						{
+							if (a[i][j] >= 7)
+							{
+								k++;
+								sum += a[i][j];
+
+							}
+							if (k == n && (sum / n < 10)) kh++; // средний балл ниже 10, чтобы отделить хорошистов от отличников
+						}
+					}
+						double percent = (kh / 10.0) * 100.0;
+						cout << kh << " хорошистов - " << percent << "%" << endl;
+				}
+					break;
+				case 2:
+				{
+					for (i = 0; i < 10; i++)
+					{
+						k = 0;
+						for (j = 0; j < n; j++)
+						{
+							if (a[i][j] >= 10) k++;
+						}
+						if (k == n) ko++;
+					}
+					double percent = (ko / 10.0) * 100.0;
+					cout << ko << " отличников - " << percent << "%" << endl;
+				}
+				break;
+				case 3:
+				{
+					int number;
+					cout << "номер студента: " << endl;
+					cin >> number;
+					double sum = 0;
+
 					for (j = 0; j < n; j++)
 					{
-						a[i][j] = 6 + rand() % 6;
-						cout << right << setw(3) << a[i][j] << " ";
+						cout << a[number][j] << " ";
+						sum += a[number][j];
+					}
+					cout << endl << endl;
+					cout << "average score = " << sum / n << endl << endl;
+				}
+				break;
+				case 4:
+				{
+					int number;
+					cout << "введите номер дисциплины: 0 - оценки всех студентов по математике, 1 - физике, 2 - программированию и 3 - физкультуре" << endl;
+					cin >> number;
+
+					for (i = 0; i < 10; i++)
+					{
+						cout << a[i][number] << " ";
 					}
 					cout << endl << endl;
 				}
-
-				int info;
-
-				int c = 0;
-				while (c < 4)
-				{
-					c++;
-					cout << "выберите тип запроса:" << endl << endl;
-					cout << "1 - процент и количество хорошистов, 2 - процент и количество отличников, 3 - список оценок конкретного студента и его средний бал, 4 - список оценок по конкретной дисциплине" << endl;
-					cin >> info;
-
-					switch (info)
-					{
-					case 1:
-					{
-						for (i = 0; i < 10; i++)
-						{
-							k = 0;
-							for (j = 0; j < n; j++)
-							{
-								if (a[i][j] >= 7) k++;
-							}
-							if (k == n) kh++;
-						}
-						double percent = (kh / 10.0) * 100.0;
-						cout << kh << " хорошистов - " << percent << "%" << endl;
-					}
-					break;
-					case 2:
-					{
-						for (i = 0; i < 10; i++)
-						{
-							k = 0;
-							for (j = 0; j < n; j++)
-							{
-								if (a[i][j] >= 10) k++;
-							}
-							if (k == n) ko++;
-						}
-						double percent = (ko / 10.0) * 100.0;
-						cout << ko << " отличников - " << percent << "%" << endl;
-					}
-					break;
-					case 3:
-					{
-						int number;
-						cout << "номер студента: " << endl;
-						cin >> number;
-						double sum=0;
-
-						for (j = 0; j < n; j++)
-						{
-							cout << a[number][j] << " ";
-							sum += a[number][j];
-						}
-						cout << endl << endl;
-						cout << "average score = " << sum / n << endl << endl;
-					}
-					break;
-					case 4:
-					{
-						int number;
-						cout << "введите номер дисциплины: 0 - оценки всех студентов по математике, 1 - физике, 2 - программированию и 3 - физкультуре" << endl;
-						cin >> number;
-
-						for (i = 0; i < 10; i++)
-						{
-							cout << a[i][number] << " ";
-						}
-						cout << endl << endl;
-					}
-					break;
-					}
+				break;
+				}
 				}
 		}
 		break;
-		case 10: // другое решение предыдущей задачи (то, которое предложили на доске коллективно
+		case 10: // другое решение предыдущей задачи (то, которое предложили на доске коллективно)
+				 // код не работает, у них много недочетов, логические ошибки при написании условий, не могут разделить отличников и хорошистов
+				 // лучше смотреть свой код, а в этом только формат составления цикла while, exit и что еще может пригодиться.
+				
 		{
+			const int n = 10;
+			const int m = 10;
+			int a[n][m];
 
+			for (int i = 0; i < n; i++)
+			{
+				cout << "Студент № " << i + 1 << " ";
+				for (int j = 0; j < m; j++)
+				{
+					a[i][j] = rand() % 4 + 8;
+					cout << setw(5) << a[i][j] << " ";
+				}
+
+				cout << endl;
+			}
+
+			int choice;
+			int e_count = 0;
+			bool e_f = false;
+			bool g_f = false;
+			int g_count = 0;
+
+
+			while (true)
+			{
+				cout << "Выберите из следующих вариантов: " << endl;
+				cout << "1)	процент и количество отличников" << endl;
+				cout << "2)	процент и количество хорошистов" << endl;
+				cout << "3)	список оценок конкретного студента и его средний бал" << endl;
+				cout << "4)	список оценок по конкретной дисциплине" << endl;
+				cout << "0)	Для выхода" << endl;
+
+				cin >> choice;
+
+				switch (choice)
+				{
+				case 1:
+				{
+					for (int i = 0; i < n; i++)
+					{
+						for (int j = 0; j < m; j++)
+						{
+							if (a[i][j] > 10)
+							{
+								e_f = false;
+								break;
+							}
+						}
+						if (e_f)
+							e_count++;
+					}
+
+					cout << e_count*100.0 / n << endl;
+				}
+				break;
+				case 2:
+				{
+					for (int i = 0; i < n; i++)
+					{
+						for (int j = 0; j < m; j++)
+						{
+							if (a[i][j] > 7 && a[i][j] < 10)
+							{
+								g_f = false;
+								break;
+							}
+						}
+						if (g_f)
+							g_count++;
+					}
+
+					cout << g_count*100.0 / n << endl;
+
+				}
+				break;
+
+				case 3:
+				{
+					int n = 0;
+					int sum = 0;
+					double average = 0;
+					cout << "Введите номер студента: ";
+					cin >> n;
+
+					for (int i = 0; i < m; i++)
+					{
+						cout << a[n - 1][i] << " ";
+					}
+
+					cout << endl;
+
+					for (int i = 0; i < m; i++)
+					{
+						sum += a[n - 1][i];
+						average = (double)sum / 10;
+					}
+					cout << "Средний балл = " << average;
+					cout << endl;
+
+				}
+				break;
+
+				case 4:
+				{
+					int k = 0;
+
+					cout << "Введите номер предмета: ";
+					cin >> k;
+
+					for (int i = 0; i < 10; i++)
+					{
+						cout << a[i][k - 1] << " ";
+					}
+
+					cout << endl;
+				}
+				break;
+
+				case 0:
+				{
+					exit(0); // для выхода 
+				}
+				break;
+				default:
+					break;
+				}
+			}
 		}
 		break;
 		default:
