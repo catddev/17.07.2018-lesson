@@ -417,7 +417,7 @@ int main()
 						{
 							if (a[i][j] > 10)
 							{
-								e_f = false;
+								e_f = true; // у них был фолз, исправила на тру
 								break;
 							}
 						}
@@ -436,7 +436,7 @@ int main()
 						{
 							if (a[i][j] > 7 && a[i][j] < 10)
 							{
-								g_f = false;
+								g_f = true; // у них был фолз, исправила на тру
 								break;
 							}
 						}
