@@ -518,15 +518,35 @@ int main()
 			int a[n][n];
 			int i, j;
 			int island = 0;
+			int zero = 0;
+			int one = 0;
 
 			for (i = 0; i < n; i++)
 			{
 				for (j = 0; j < n; j++)
 				{
-					a[i][j] = rand() % 4;
-					if (a[i][j] == 2 || a[i][j] == 3) a[i][j] = 0; // не строго, но приблизительно в три раза больше нулей будет
-					
-					cout << a[i][j] << " ";
+					a[i][j] = rand() % 2;
+					if (a[i][j] == 0) zero++;
+					else one++;
+				}
+			}
+
+			while (one > (n*n) / 4)
+			{
+				i = rand() % 12;
+				j = rand() % 12;
+				if (a[i][j] == 1)
+				{
+					a[i][j] = 0;
+					one--;
+				}
+			}
+
+			for (i = 0; i < n; i++)
+			{
+				for (j = 0; j < n; j++)
+				{
+					cout << a[i][j]<<" ";
 				}
 				cout << endl;
 			}
